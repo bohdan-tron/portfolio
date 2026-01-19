@@ -11,7 +11,11 @@
     "start": "node dist/server.js",
     "start:staging": "NODE_ENV=staging node dist/server.js",
     "start:prod": "NODE_ENV=production node dist/server.js",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "Tron Bohdan",
@@ -21,10 +25,12 @@
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "helmet": "^8.1.0",
+    "husky": "^9.1.7",
     "pino": "^10.2.0",
     "pino-http": "^11.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.11",
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/node": "^25.0.9",

@@ -6,11 +6,11 @@ export class StaticRoutes {
     req: http.IncomingMessage,
     res: http.ServerResponse
   ): Promise<boolean> {
-    const url = req.url || "/";
+    const url = req.url || '/';
 
     switch (url) {
-      case "/":
-      case "/index.html":
+      case '/':
+      case '/index.html':
         await PageController.getIndexPage(req, res);
         return true;
 

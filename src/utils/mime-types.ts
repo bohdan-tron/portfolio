@@ -22,14 +22,16 @@ export class MimeTypes {
 
   static getType(filePath: string): string {
     const ext = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
-    return this.types[ext] || "application/octet-stream";
+    return MimeTypes.types[ext] || "application/octet-stream";
   }
 
   static isText(filePath: string): boolean {
-    const mimeType = this.getType(filePath);
-    return mimeType.startsWith("text/") || 
-           mimeType === "application/javascript" || 
-           mimeType === "application/json" ||
-           mimeType === "application/xml";
+    const mimeType = MimeTypes.getType(filePath);
+    return (
+      mimeType.startsWith("text/") ||
+      mimeType === "application/javascript" ||
+      mimeType === "application/json" ||
+      mimeType === "application/xml"
+    );
   }
 }

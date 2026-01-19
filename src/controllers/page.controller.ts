@@ -1,11 +1,11 @@
-import http from "http";
+import type http from "http";
 import { FileReader } from "../utils/file-reader.js";
 import { MimeTypes } from "../utils/mime-types.js";
 
 export class PageController {
   static async servePage(
     res: http.ServerResponse,
-    filePath: string
+    filePath: string,
   ): Promise<void> {
     try {
       const content = await FileReader.readFile(filePath);
@@ -21,14 +21,14 @@ export class PageController {
 
   static async getIndexPage(
     req: http.IncomingMessage,
-    res: http.ServerResponse
+    res: http.ServerResponse,
   ): Promise<void> {
     await PageController.servePage(res, "public/index.html");
   }
 
   static async getBlogPage(
     req: http.IncomingMessage,
-    res: http.ServerResponse
+    res: http.ServerResponse,
   ): Promise<void> {
     await PageController.servePage(res, "public/blog.html");
   }

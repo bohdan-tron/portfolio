@@ -1,16 +1,16 @@
-import http from "http";
+import type http from "http";
 import { PageController } from "../controllers/page.controller.js";
 
 export class StaticRoutes {
   static async handleRequest(
     req: http.IncomingMessage,
-    res: http.ServerResponse
+    res: http.ServerResponse,
   ): Promise<boolean> {
-    const url = req.url || '/';
+    const url = req.url || "/";
 
     switch (url) {
-      case '/':
-      case '/index.html':
+      case "/":
+      case "/index.html":
         await PageController.getIndexPage(req, res);
         return true;
 

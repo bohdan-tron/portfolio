@@ -1,0 +1,9 @@
+services:
+  web:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+      PORT: 1337
+    ports:
+      - "1337:1337"

@@ -21,8 +21,9 @@ const handleServer = async (
 
 const server = http.createServer(handleServer);
 
-server.listen(process.env.PORT || 1337, () => {
-  console.log(
-    `Server running at http://localhost:${process.env.PORT || 1337}/`,
-  );
+const port = Number(process.env.PORT) || 1337;
+const host = process.env.HOST || "0.0.0.0";
+
+server.listen(port, host, () => {
+  console.log(`Server running at http://${host}:${port}/`);
 });

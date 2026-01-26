@@ -1,7 +1,6 @@
 services:
   web:
-    build:
-      context: .
+    image: ${IMAGE_NAME:-ghcr.io/bohdan-tron/portfolio}:${IMAGE_TAG:-stage}
     environment:
       NODE_ENV: production
       PORT: 1337

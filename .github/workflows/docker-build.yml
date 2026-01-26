@@ -7,7 +7,8 @@ permissions:
 on:
   push:
     branches:
-      - "**"
+      - "main"
+      - "stage"
   pull_request:
 
 env:
@@ -54,21 +55,16 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Write build summary
-        shell: bash
-        run: |
-          echo "## Docker build result" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Commit: ${{ github.sha }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Image ID: ${{ steps.build.outputs.imageid }}" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Save build info
+      - name: Save build info (private)
+        if: github.event_name == 'push'
         shell: bash
         run: |
           printf "commit=%s\nimageid=%s\n" "${{ github.sha }}" "${{ steps.build.outputs.imageid }}" > build-info.txt
 
       - name: Upload build info artifact
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: docker-build-info
           path: build-info.txt
+          retention-days: 1

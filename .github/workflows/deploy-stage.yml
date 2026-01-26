@@ -1,5 +1,9 @@
 name: Deploy Stage
 
+permissions:
+  contents: read
+  actions: read
+
 on:
   workflow_run:
     workflows: ["Docker Build"]
@@ -11,6 +15,7 @@ jobs:
     name: Deploy to Stage VM
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'stage'
+    environment: stage
 
     steps:
       - name: Deploy via SSH

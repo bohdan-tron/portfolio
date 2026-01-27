@@ -32,4 +32,11 @@ export class PageController {
   ): Promise<void> {
     await PageController.servePage(res, "public/blog.html");
   }
+
+  static async getWhoamiPage(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+  ): Promise<void> {
+    await PageController.servePage(res, "public/whoami.html");
+  }
 }

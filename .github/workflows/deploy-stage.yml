@@ -20,7 +20,7 @@ jobs:
       url: ${{ vars.STAGE_URL }}
 
     steps:
-      - name: Deploy via SSH
+      - name: Test SSH Connection
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.STAGE_VM_HOST }}
@@ -29,16 +29,7 @@ jobs:
           port: ${{ secrets.STAGE_VM_PORT }}
           debug: true
           script: |
-            set -e
-            echo "Testing SSH connection..."
+            echo "SSH connection successful!"
             whoami
             pwd
             ls -la
-            cd "${{ secrets.STAGE_VM_APP_PATH }}"
-            echo "Changed to app directory"
-            export IMAGE_NAME="ghcr.io/${{ github.repository }}"
-            export IMAGE_TAG="stage"
-            echo "Starting Docker deployment..."
-            sudo docker compose pull
-            sudo docker compose up -d --force-recreate --env-file ${{ secrets.STAGE_VM_ENV }}
-            sudo docker image prune -f

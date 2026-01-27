@@ -19,8 +19,17 @@ export class StaticRoutes {
         await PageController.getBlogPage(req, res);
         return true;
 
+      case "/whoami":
+      case "/whoami.html":
+        await PageController.getWhoamiPage(req, res);
+        return true;
+
       case "/styles/global.css":
         await PageController.servePage(res, "public/styles/global.css");
+        return true;
+
+      case "/components/site-header.js":
+        await PageController.servePage(res, "public/components/site-header.js");
         return true;
 
       default:

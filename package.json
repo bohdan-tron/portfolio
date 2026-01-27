@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "NODE_ENV=local tsx watch src/server.ts",
     "dev:pretty": "NODE_ENV=local tsx watch src/server.ts | pino-pretty",
+    "dev:full": "concurrently \"npm run dev\" \"npm run build:components:watch\"",
     "build": "tsc",
+    "build:components": "tsc -p tsconfig.components.json",
+    "build:components:watch": "tsc -p tsconfig.components.json --watch",
     "start": "node dist/server.js",
     "start:staging": "NODE_ENV=staging node dist/server.js",
     "start:prod": "NODE_ENV=production node dist/server.js",
@@ -34,6 +37,7 @@
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/node": "^25.0.9",
+    "concurrently": "^9.2.1",
     "lint-staged": "^16.2.7",
     "nodemon": "^3.1.11",
     "pino-pretty": "^13.1.3",

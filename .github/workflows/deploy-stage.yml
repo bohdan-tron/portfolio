@@ -29,9 +29,29 @@ jobs:
           port: ${{ secrets.STAGE_VM_PORT }}
           script: |
             set -e
+            echo "Current directory: $(pwd)"
+            echo "Target directory: ${{ secrets.STAGE_VM_APP_PATH }}"
+            
+            # Create directory if it doesn't exist
+            if [ ! -d "${{ secrets.STAGE_VM_APP_PATH }}" ]; then
+              echo "Creating directory..."
+              sudo mkdir -p "${{ secrets.STAGE_VM_APP_PATH }}"
+              sudo chown $USER:${{ secrets.STAGE_VM_USER }} "${{ secrets.STAGE_VM_APP_PATH }}"
+            fi
+            
             cd "${{ secrets.STAGE_VM_APP_PATH }}"
+            echo "Changed to: $(pwd)"
+            ls -la
+            
             export IMAGE_NAME="ghcr.io/${{ github.repository }}"
             export IMAGE_TAG="stage"
+            
+            # Check if docker-compose.yml exists
+            if [ ! -f "docker-compose.yml" ]; then
+              echo "ERROR: docker-compose.yml not found in $(pwd)"
+              exit 1
+            fi
+            
             sudo docker compose pull
             sudo docker compose up -d --force-recreate --env-file ${{ secrets.STAGE_VM_ENV }}
             sudo docker image prune -f

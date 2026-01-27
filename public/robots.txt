@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Block all crawlers from accessing the entire site
+# This is a training/experimental environment

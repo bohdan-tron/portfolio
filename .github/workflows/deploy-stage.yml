@@ -5,16 +5,16 @@ permissions:
   actions: read
 
 on:
-  workflow_run:
-    workflows: ["Docker Build"]
-    types:
-      - completed
+  pull_request:
+    types: [closed]
+    branches:
+      - "stage"
 
 jobs:
   deploy:
     name: Deploy to Stage VM
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'stage'
+    if: github.event.pull_request.merged == true
     environment:
       name: stage
       url: ${{ vars.STAGE_URL }}

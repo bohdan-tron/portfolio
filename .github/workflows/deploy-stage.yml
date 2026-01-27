@@ -41,16 +41,27 @@ jobs:
             
             cd "${{ secrets.STAGE_VM_APP_PATH }}"
             echo "Changed to: $(pwd)"
-            ls -la
             
-            export IMAGE_NAME="ghcr.io/${{ github.repository }}"
-            export IMAGE_TAG="stage"
+            # Clone or update repository
+            if [ ! -d ".git" ]; then
+              echo "Cloning repository..."
+              git clone https://github.com/${{ github.repository }}.git .
+              git checkout stage
+            else
+              echo "Pulling latest changes..."
+              git pull origin stage
+            fi
             
             # Check if docker-compose.yml exists
             if [ ! -f "docker-compose.yml" ]; then
               echo "ERROR: docker-compose.yml not found in $(pwd)"
+              echo "Contents:"
+              ls -la
               exit 1
             fi
+            
+            export IMAGE_NAME="ghcr.io/${{ github.repository }}"
+            export IMAGE_TAG="stage"
             
             sudo docker compose pull
             sudo docker compose up -d --force-recreate --env-file ${{ secrets.STAGE_VM_ENV }}

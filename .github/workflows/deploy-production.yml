@@ -33,5 +33,5 @@ jobs:
             export IMAGE_NAME="ghcr.io/${{ github.repository }}"
             export IMAGE_TAG="main"
             sudo docker compose pull
-            sudo docker compose up -d --force-recreate --env-file /opt/portfolio-prod/.shibari
+            sudo docker compose up -d --force-recreate --env-file ${{ secrets.PROD_VM_ENV }}
             sudo docker image prune -f

@@ -29,9 +29,47 @@ jobs:
           port: ${{ secrets.PROD_VM_PORT }}
           script: |
             set -e
+            echo "Current directory: $(pwd)"
+            echo "Target directory: ${{ secrets.PROD_VM_APP_PATH }}"
+            
+            # Create directory if it doesn't exist
+            if [ ! -d "${{ secrets.PROD_VM_APP_PATH }}" ]; then
+              echo "Creating directory..."
+              sudo mkdir -p "${{ secrets.PROD_VM_APP_PATH }}"
+              sudo chown $USER:${{ secrets.PROD_VM_USER }} "${{ secrets.PROD_VM_APP_PATH }}"
+            fi
+            
             cd "${{ secrets.PROD_VM_APP_PATH }}"
+            echo "Changed to: $(pwd)"
+            
+            # Clone or update repository
+            if [ ! -d ".git" ]; then
+              echo "Cloning repository..."
+              git clone https://github.com/${{ github.repository }}.git .
+              git checkout main
+            else
+              echo "Pulling latest changes..."
+              git pull origin main
+            fi
+            
+            # Check if docker-compose.yml exists
+            if [ ! -f "docker-compose.yml" ]; then
+              echo "ERROR: docker-compose.yml not found in $(pwd)"
+              echo "Contents:"
+              ls -la
+              exit 1
+            fi
+            
             export IMAGE_NAME="ghcr.io/${{ github.repository }}"
             export IMAGE_TAG="main"
+            
+            # Load environment variables from file
+            if [ -f "${{ secrets.PROD_VM_ENV }}" ]; then
+              set -a
+              source ${{ secrets.PROD_VM_ENV }}
+              set +a
+            fi
+            
             sudo docker compose pull
-            sudo docker compose up -d --force-recreate --env-file ${{ secrets.PROD_VM_ENV }}
+            sudo docker compose up -d --force-recreate
             sudo docker image prune -f

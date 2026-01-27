@@ -2,7 +2,7 @@ services:
   web:
     image: ${IMAGE_NAME:-ghcr.io/bohdan-tron/portfolio}:${IMAGE_TAG:-stage}
     environment:
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
       PORT: 1337
     ports:
-      - "1337:1337"
+      - "127.0.0.1:${HOST_PORT:-1337}:1337"

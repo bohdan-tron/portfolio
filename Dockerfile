@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build
+FROM node:24-bookworm-slim AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY public ./public
 
 RUN pnpm build
 
-FROM node:20-alpine AS runtime
+FROM node:24-bookworm-slim AS runtime
 
 WORKDIR /app
 
@@ -25,8 +25,8 @@ RUN corepack enable
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --prod --frozen-lockfile
 
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/public ./public
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/public ./public
 
 EXPOSE 1337
 

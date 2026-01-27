@@ -63,6 +63,13 @@ jobs:
             export IMAGE_NAME="ghcr.io/${{ github.repository }}"
             export IMAGE_TAG="stage"
             
+            # Load environment variables from file
+            if [ -f "${{ secrets.STAGE_VM_ENV }}" ]; then
+              set -a
+              source ${{ secrets.STAGE_VM_ENV }}
+              set +a
+            fi
+            
             sudo docker compose pull
-            sudo docker compose up -d --force-recreate --env-file ${{ secrets.STAGE_VM_ENV }}
+            sudo docker compose up -d --force-recreate
             sudo docker image prune -f

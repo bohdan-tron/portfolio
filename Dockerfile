@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build
+FROM node:24-bookworm-slim AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY public ./public
 
 RUN pnpm build
 
-FROM node:20-alpine AS runtime
+FROM node:24-bookworm-slim AS runtime
 
 WORKDIR /app
 

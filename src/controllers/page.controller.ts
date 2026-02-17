@@ -26,17 +26,17 @@ export class PageController {
     await PageController.servePage(res, "public/index.html");
   }
 
-  static async getBlogPage(
-    req: http.IncomingMessage,
-    res: http.ServerResponse,
-  ): Promise<void> {
-    await PageController.servePage(res, "public/blog.html");
-  }
-
   static async getWhoamiPage(
     req: http.IncomingMessage,
     res: http.ServerResponse,
   ): Promise<void> {
     await PageController.servePage(res, "public/whoami.html");
+  }
+
+  static async getCrocoPage(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+  ): Promise<void> {
+    await PageController.servePage(res, "public/croco.html");
   }
 }

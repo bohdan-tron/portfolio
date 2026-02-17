@@ -18,6 +18,10 @@ export class GameClient {
     this.initializeEventHandlers();
     this.initializeUI();
 
+    this.boundCreateGame = this.createGame.bind(this);
+    this.boundJoinGame = this.joinGame.bind(this);
+    this.boundCopyRoomCode = this.copyRoomCode.bind(this);
+
     GameClient.instance = this;
   }
 
@@ -29,7 +33,6 @@ export class GameClient {
   }
 
   initializeEventHandlers() {
-    // WebSocket event handlers
     this.wsClient.on("connected", () => {
       this.updateConnectionStatus("Connected to game server", "success");
     });
@@ -49,7 +52,6 @@ export class GameClient {
   }
 
   initializeUI() {
-    // Get UI elements
     this.createGameBtn = document.getElementById("createGameBtn");
     this.joinGameBtn = document.getElementById("joinGameBtn");
     this.copyCodeBtn = document.getElementById("copyCodeBtn");
@@ -59,38 +61,31 @@ export class GameClient {
     this.roomCodeContainer = document.getElementById("roomCodeContainer");
     this.connectionStatus = document.getElementById("connectionStatus");
 
-    // Add event listeners
-    this.createGameBtn.addEventListener("click", () => this.createGame());
-    this.joinGameBtn.addEventListener("click", () => this.joinGame());
-    this.copyCodeBtn.addEventListener("click", () => this.copyRoomCode());
+    this.createGameBtn.addEventListener("click", this.boundCreateGame);
+    this.joinGameBtn.addEventListener("click", this.boundJoinGame);
+    this.copyCodeBtn.addEventListener("click", this.boundCopyRoomCode);
 
-    // Enable/disable join button based on room code input
     this.roomCodeInput.addEventListener("input", () => {
       this.joinGameBtn.disabled = this.roomCodeInput.value.trim().length !== 6;
     });
 
-    // Update player count when changed
     this.playerCountSelect.addEventListener("change", () => {
       this.playerCount = parseInt(this.playerCountSelect.value, 10);
     });
 
-    // Initialize WebSocket connection
     this.connectToServer();
   }
 
   reinitializeUI() {
     if (this.createGameBtn) {
-      this.createGameBtn.removeEventListener("click", this.createGame);
+      this.createGameBtn.removeEventListener("click", this.boundCreateGame);
     }
-
     if (this.joinGameBtn) {
-      this.joinGameBtn.removeEventListener("click", this.joinGame);
+      this.joinGameBtn.removeEventListener("click", this.boundJoinGame);
     }
-
     if (this.copyCodeBtn) {
-      this.copyCodeBtn.removeEventListener("click", this.copyRoomCode);
+      this.copyCodeBtn.removeEventListener("click", this.boundCopyRoomCode);
     }
-
     this.initializeUI();
   }
 
@@ -142,13 +137,16 @@ export class GameClient {
 
     switch (message.type) {
       case "room-created":
-        this.handleRoomCreated(message.data);
+        this.handleRoomCreated(message.payload);
         break;
       case "room-joined":
-        this.handleRoomJoined(message.data);
+        this.handleRoomJoined(message.payload);
+        break;
+      case "player-joined":
+        this.handleRoomJoined(message.payload);
         break;
       case "error":
-        this.handleError(message.data);
+        this.handleError(message.payload);
         break;
       default:
         console.log("Unknown message type:", message.type);
@@ -159,7 +157,6 @@ export class GameClient {
     this.roomCode = data.roomCode;
     this.isCreator = true;
 
-    // Display room code
     this.roomCodeDisplay.textContent = this.roomCode;
     this.roomCodeContainer.classList.remove("hidden");
 
@@ -168,7 +165,6 @@ export class GameClient {
       "success",
     );
 
-    // Redirect to room page after a short delay
     setTimeout(() => {
       window.location.href = `/croco/${this.roomCode}`;
     }, 2000);
@@ -180,7 +176,6 @@ export class GameClient {
 
     this.updateConnectionStatus(`Joined room: ${this.roomCode}`, "success");
 
-    // Redirect to room page after a short delay
     setTimeout(() => {
       window.location.href = `/croco/${this.roomCode}`;
     }, 2000);
@@ -195,10 +190,9 @@ export class GameClient {
     this.connectionStatus.className = `connection-status ${type}`;
     this.connectionStatus.classList.remove("hidden");
 
-    // Hide status message after 5 seconds
     setTimeout(() => {
       this.connectionStatus.classList.add("hidden");
-    }, 5000);
+    }, 8000);
   }
 
   copyRoomCode() {

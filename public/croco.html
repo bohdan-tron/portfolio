@@ -156,7 +156,9 @@
     import { GameClient } from '/js/game-client.js';
 
     document.addEventListener('DOMContentLoaded', () => {
-      const gameClient = new GameClient();
+      const gameClient = GameClient.getInstance();
+
+      gameClient.reinitializeUI();
 
       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         window.gameClient = gameClient;

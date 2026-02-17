@@ -1,7 +1,15 @@
 import { WebSocketClient } from "./websocket-client.js";
 
 export class GameClient {
+  static instance = null;
+
   constructor() {
+    if (GameClient.instance) {
+      throw new Error(
+        "Use GameClient.getInstance() instead of new GameClient()",
+      );
+    }
+
     this.wsClient = new WebSocketClient();
     this.roomCode = null;
     this.isCreator = false;
@@ -9,6 +17,15 @@ export class GameClient {
 
     this.initializeEventHandlers();
     this.initializeUI();
+
+    GameClient.instance = this;
+  }
+
+  static getInstance() {
+    if (!GameClient.instance) {
+      GameClient.instance = new GameClient();
+    }
+    return GameClient.instance;
   }
 
   initializeEventHandlers() {
@@ -59,6 +76,22 @@ export class GameClient {
 
     // Initialize WebSocket connection
     this.connectToServer();
+  }
+
+  reinitializeUI() {
+    if (this.createGameBtn) {
+      this.createGameBtn.removeEventListener("click", this.createGame);
+    }
+
+    if (this.joinGameBtn) {
+      this.joinGameBtn.removeEventListener("click", this.joinGame);
+    }
+
+    if (this.copyCodeBtn) {
+      this.copyCodeBtn.removeEventListener("click", this.copyRoomCode);
+    }
+
+    this.initializeUI();
   }
 
   connectToServer() {

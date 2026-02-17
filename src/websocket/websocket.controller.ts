@@ -8,7 +8,7 @@ import {
   type RoomCreatedPayload,
   type WebSocketMessage,
 } from "../types/game.types.js";
-import { WebSocketManager } from "../utils/websocket-manager.js";
+import { WebSocketManager } from "./websocket-manager.js";
 
 export class WebSocketController {
   private wss: WebSocketServer;

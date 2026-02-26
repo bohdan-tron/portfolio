@@ -1,0 +1,16 @@
+{
+  "name": "@portfolio/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm run build:components",
+    "build:components": "tsc -p tsconfig.components.json",
+    "dev": "tsc -p tsconfig.components.json --watch",
+    "type-check": "tsc --noEmit -p tsconfig.components.json",
+    "lint": "biome check public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.11",
+    "typescript": "^5.9.3"
+  }
+}

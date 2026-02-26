@@ -1,8 +1,8 @@
 # Domain -> VPS (Ubuntu 24) + Nginx reverse proxy + HTTPS
 
-This repo runs a small Node.js HTTP server that serves static pages from `public/`.
+This repo runs a small Node.js backend (`apps/backend`) that serves static pages from `apps/frontend/public` and `apps/drawnguess/public`.
 
-- Default app port: `1337` (see `src/server.ts` / `Dockerfile` / `docker-compose.yml`)
+- Default app port: `1337` (see `apps/backend/src/server.ts` / `Dockerfile` / `docker-compose.yml`)
 - The recommended production setup is:
   - Internet (80/443)
   - Nginx on the VPS
@@ -359,7 +359,7 @@ Your workflows reference the following. You must set these in GitHub:
 
 ### What you have
 
-This repo serves static HTML/CSS from `public/` via a Node server. There is no heavy dynamic backend logic visible here.
+This repo serves static HTML/CSS from `apps/frontend/public` and `apps/drawnguess/public` via the backend app. Keep Nginx configuration on the VPS (`/etc/nginx/...`) and out of this repository.
 
 ### Recommendation
 

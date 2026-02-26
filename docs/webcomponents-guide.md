@@ -5,7 +5,7 @@ This guide covers Web Components development in this portfolio project, includin
 ## Project Structure
 
 ```
-public/components/
+apps/frontend/public/components/
 ├── site-header.ts          # TypeScript source
 ├── site-header.js          # Compiled JavaScript (auto-generated)
 ├── tsconfig.components.json # TypeScript configuration
@@ -143,7 +143,7 @@ class YourComponent extends HTMLElement {
 }
 ```
 
-Then add styles to `/public/styles/global.css`:
+Then add styles to `/apps/frontend/public/styles/global.css`:
 
 ```css
 /* Global styles for components */

@@ -11,9 +11,9 @@ class SiteHeader extends HTMLElement {
       <header>
         <nav>
           <ul>
-            <li><a href="/whoami" ${activePage === "whoami" ? 'class="active"' : ""}>Хто я?</a></li>
             <li><a href="/" ${activePage === "home" ? 'class="active"' : ""}>Main Page</a></li>
-            <li><a href="/blog" ${activePage === "blog" ? 'class="active"' : ""}>Blog Page</a></li>
+            <li><a href="/croco" ${activePage === "croco" ? 'class="active"' : ""}>Draw & Guess</a></li>
+            <li><a href="/whoami" ${activePage === "whoami" ? 'class="active"' : ""}>Хто я?</a></li>
           </ul>
         </nav>
       </header>

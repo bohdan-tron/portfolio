@@ -14,14 +14,19 @@ export class StaticRoutes {
         await PageController.getIndexPage(req, res);
         return true;
 
-      case "/blog":
-      case "/blog.html":
-        await PageController.getBlogPage(req, res);
-        return true;
+      // case "/blog":
+      // case "/blog.html":
+      //   await PageController.getBlogPage(req, res);
+      //   return true;
 
       case "/whoami":
       case "/whoami.html":
         await PageController.getWhoamiPage(req, res);
+        return true;
+
+      case "/croco":
+      case "/croco.html":
+        await PageController.getCrocoPage(req, res);
         return true;
 
       case "/styles/global.css":
@@ -30,6 +35,14 @@ export class StaticRoutes {
 
       case "/components/site-header.js":
         await PageController.servePage(res, "public/components/site-header.js");
+        return true;
+
+      case "/js/game-client.js":
+        await PageController.servePage(res, "public/js/game-client.js");
+        return true;
+
+      case "/js/websocket-client.js":
+        await PageController.servePage(res, "public/js/websocket-client.js");
         return true;
 
       default:

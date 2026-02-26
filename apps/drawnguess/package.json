@@ -1,0 +1,11 @@
+{
+  "name": "@portfolio/drawnguess",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'drawnguess static assets build step not required'",
+    "dev": "echo 'drawnguess assets are served by backend'",
+    "lint": "echo 'no lint step configured for drawnguess static assets'",
+    "type-check": "echo 'no type-check step configured for drawnguess static assets'"
+  }
+}

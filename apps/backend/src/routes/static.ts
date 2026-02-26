@@ -30,19 +30,19 @@ export class StaticRoutes {
         return true;
 
       case "/styles/global.css":
-        await PageController.servePage(res, "public/styles/global.css");
+        await PageController.servePage(res, "apps/frontend/public/styles/global.css");
         return true;
 
       case "/components/site-header.js":
-        await PageController.servePage(res, "public/components/site-header.js");
+        await PageController.servePage(res, "apps/frontend/public/components/site-header.js");
         return true;
 
       case "/js/game-client.js":
-        await PageController.servePage(res, "public/js/game-client.js");
+        await PageController.servePage(res, "apps/drawnguess/public/js/game-client.js");
         return true;
 
       case "/js/websocket-client.js":
-        await PageController.servePage(res, "public/js/websocket-client.js");
+        await PageController.servePage(res, "apps/drawnguess/public/js/websocket-client.js");
         return true;
 
       default:

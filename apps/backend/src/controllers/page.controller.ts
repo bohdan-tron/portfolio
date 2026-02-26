@@ -23,20 +23,20 @@ export class PageController {
     req: http.IncomingMessage,
     res: http.ServerResponse,
   ): Promise<void> {
-    await PageController.servePage(res, "public/index.html");
+    await PageController.servePage(res, "apps/frontend/public/index.html");
   }
 
   static async getWhoamiPage(
     req: http.IncomingMessage,
     res: http.ServerResponse,
   ): Promise<void> {
-    await PageController.servePage(res, "public/whoami.html");
+    await PageController.servePage(res, "apps/frontend/public/whoami.html");
   }
 
   static async getCrocoPage(
     req: http.IncomingMessage,
     res: http.ServerResponse,
   ): Promise<void> {
-    await PageController.servePage(res, "public/croco.html");
+    await PageController.servePage(res, "apps/drawnguess/public/croco.html");
   }
 }
